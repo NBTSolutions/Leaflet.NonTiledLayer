@@ -141,14 +141,14 @@ L.NonTiledLayer = L.Class.extend({
 		    scale = image._scale * map.getZoomScale(e.zoom),
 		    nw = image._bounds.getNorthWest(),
 		    se = image._bounds.getSouthEast(),
-			
+
 		    topLeft = map._latLngToNewLayerPoint(nw, e.zoom, e.center),
 		    size = map._latLngToNewLayerPoint(se, e.zoom, e.center)._subtract(topLeft),
 		    origin = topLeft._add(size._multiplyBy((1 / 2) * (1 - 1 / scale)));
 
         image.style[L.DomUtil.TRANSFORM] =
 		        L.DomUtil.getTranslateString(origin) + ' scale(' + scale + ') ';
-				
+
 		image._lastScale = scale;
     },
 
@@ -183,21 +183,21 @@ L.NonTiledLayer = L.Class.extend({
         return new L.LatLngBounds(world1, world2);
     },
 
-    _update: function () {	
+    _update: function () {
         if ((this.options.minZoom && this._map.getZoom() < this.options.minZoom) ||
 		(this.options.maxZoom && this._map.getZoom() > this.options.maxZoom)) {
             this._currentImage.src = L.Util.emptyImageUrl;
             this._bufferImage.src = L.Util.emptyImageUrl;
 			this._div.style.visibility = 'hidden';
-			
-			if (this._addInteraction) 
-               this._addInteraction(null);			 
-			   
+
+			if (this._addInteraction)
+               this._addInteraction(null);
+
             return;
         }
 
         this._div.style.visibility = 'visible';
-    
+
         var bounds = this._getClippedBounds();
 
         // re-project to corresponding pixel bounds
@@ -235,6 +235,8 @@ L.NonTiledLayer = L.Class.extend({
                 oiua(i, k, url, tag);
             });
         }
+
+        this.fire('loading');
     },
 
     _onImageUrlAsync: function (i, k, url, tag) {
@@ -243,12 +245,12 @@ L.NonTiledLayer = L.Class.extend({
             i.tag = tag;
             i.key = k;
         }
-    }, 
+    },
 
     _onImageLoad: function (e) {
 		if(e.target.src ==  L.Util.emptyImageUrl)
 			return;
-	
+
 		if (this.key != e.target.key || e.target != this._currentImage)
             return;
 
