@@ -16,6 +16,9 @@ L.NonTiledLayer = L.Class.extend({
     // override this method in the inherited class
     //getImageUrl: function (world1, world2, width, height) {},
     //getImageUrlAsync: function (world1, world2, width, height, key, f) {},
+		
+		// Layer will only refresh / redraw if dirty is false
+		dirty: false,
 
     initialize: function (options) {
         L.setOptions(this, options);
@@ -184,6 +187,8 @@ L.NonTiledLayer = L.Class.extend({
     },
 
     _update: function () {
+			if (this.dirty) { return; }
+
         if ((this.options.minZoom && this._map.getZoom() < this.options.minZoom) ||
 		(this.options.maxZoom && this._map.getZoom() > this.options.maxZoom)) {
             this._currentImage.src = L.Util.emptyImageUrl;
@@ -270,7 +275,17 @@ L.NonTiledLayer = L.Class.extend({
 
     _updateOpacity: function (image) {
         L.DomUtil.setOpacity(image, this.options.opacity);
-    }
+    },
+
+		setDirty: function() {
+			this.dirty = true;
+		},
+
+		setClean: function() {
+			this.dirty = false;
+			this.redraw();
+		}
+
 });
 
 L.nonTiledLayer = function () {
