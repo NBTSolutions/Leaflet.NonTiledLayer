@@ -1,0 +1,56 @@
+{
+  "name": "leaflet.nontiledlayer",
+  "version": "1.0.6",
+  "description": "A leaflet layer for non-tiled overlays",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/NonTiledLayer-src.js",
+  "directories": {
+    "dist": "dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ptv-logistics/Leaflet.NonTiledLayer.git"
+  },
+  "scripts": {
+    "prepublish": "grunt"
+  },
+  "keywords": [
+    "leaflet",
+    "xserver",
+    "wms"
+  ],
+  "author": {
+    "name": "Oliver Heilig",
+    "email": "oliver.heilig@ptvgroup.com"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ptv-logistics/Leaflet.NonTiledLayer/issues"
+  },
+  "homepage": "https://github.com/ptv-logistics/Leaflet.NonTiledLayer",
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "leaflet": "global:L"
+  },
+  "dependencies": {
+    "leaflet": "^1.2.0"
+  },
+  "devDependencies": {
+    "browserify": "^14.4.0",
+    "browserify-shim": "^3.8.14",
+    "faucet": "0.0.1",
+    "grunt": "^1.0.1",
+    "grunt-browserify": "^5.2.0",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-uglify": "^3.1.0",
+    "phantomjs": "^2.1.7",
+    "tape": "^4.8.0",
+    "tape-run": "^3.0.0"
+  }
+}
